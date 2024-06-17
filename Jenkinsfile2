@@ -30,7 +30,7 @@ pipeline {
                     sh "aws ec2 wait instance-running --region ${env.AWS_REGION} --instance-ids ${env.INSTANCE_ID}"
 
                     env.INSTANCE_IP = sh(script: """
-                        aws ec2 describe-instances --instance-ids ${env.INSTANCE_ID} --query 'Reservations[0].Instances[0].PublicIpAddress' --output text
+                        aws ec2 describe-instances --region ${env.AWS_REGION} --instance-ids ${env.INSTANCE_ID} --query 'Reservations[0].Instances[0].PublicIpAddress' --output text
                     """, returnStdout: true).trim()
 
                     echo "Instance IP: ${env.INSTANCE_IP}"
