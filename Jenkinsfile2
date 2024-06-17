@@ -51,7 +51,7 @@ pipeline {
                             sudo systemctl start httpd
                             sudo systemctl enable httpd
 EOF
-                        scp -o StrictHostKeyChecking=no -r ./index.html ec2-user@${env.INSTANCE_IP}:/var/www/html/
+                        scp -o StrictHostKeyChecking=no -r ./index.html ec2-user@${env.INSTANCE_IP}:/var/www/html
                     """
                 }
                 echo "Website deployed at http://${env.INSTANCE_IP}"
