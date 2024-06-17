@@ -27,10 +27,10 @@ pipeline {
                     sh "aws ec2 create-tags --region ${env.AWS_REGION} --resources ${env.INSTANCE_ID} --tags Key=Name,Value=${env.INSTANCE_TAG}"
 
                     echo "Waiting for instance to be running..."
-                    sh "aws ec2 wait instance-running --instance-ids ${env.INSTANCE_ID}"
+                    sh "aws ec2 wait instance-running --instance-ids ${env.INSTANCE_ID}" --region ${env.AWS_REGION}
 
                     env.INSTANCE_IP = sh(script: """
-                        aws ec2 describe-instances --instance-ids ${env.INSTANCE_ID} --query 'Reservations[0].Instances[0].PublicIpAddress' --output text
+                        aws ec2 describe-instances --instance-ids ${env.INSTANCE_ID} --region ${env.AWS_REGION} --query 'Reservations[0].Instances[0].PublicIpAddress' --output text
                     """, returnStdout: true).trim()
 
                     echo "Instance IP: ${env.INSTANCE_IP}"
